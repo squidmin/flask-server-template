@@ -8,13 +8,15 @@ Created using <a href = "https://www.python.org/downloads/release/python-3110/">
 
 `pip3 install Flask`
 
+Read more about Flask installation <a href="https://flask.palletsprojects.com/en/2.2.x/installation/">here</a>.
+
 ### Run the application
 
 In the project root, directory:
 
 `python3 -m flask run`
 
-Read more about Flask installation <a href="https://flask.palletsprojects.com/en/2.2.x/installation/">here</a>.
+---
 
 <details>
   <summary>Installing virtualenv</summary>
