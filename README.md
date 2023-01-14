@@ -24,13 +24,11 @@ Read more about Flask installation <a href="https://flask.palletsprojects.com/en
   `pip install <package>`
 
   it will be installed to the `venv` folder and not conflict with dependencies in other projects.
-
-  Important: Remember to add `venv` to your project's `.gitignore` file so it isn't included in your source code.
-  It is preferable to install big packages (like NumPy) or packages you always use (like IPython) globally. All the rest can be installed in a virtualenv.
 </details>
 
 <details>
   <summary>Leaving the virtual environment</summary>
+  
   To leave the virtual environment, run:
   `deactivate`
 </details>
