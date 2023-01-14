@@ -4,6 +4,10 @@ Template for Flask server development.
 
 Created using <a href = "https://www.python.org/downloads/release/python-3110/">Python v3.11</a>.
 
+### Install Flask
+
+`pip3 install Flask`
+
 Read more about Flask installation <a href="https://flask.palletsprojects.com/en/2.2.x/installation/">here</a>.
 
 <details>
@@ -28,7 +32,7 @@ Read more about Flask installation <a href="https://flask.palletsprojects.com/en
 
 <details>
   <summary>Leaving the virtual environment</summary>
-  
+
   To leave the virtual environment, run:
   `deactivate`
 </details>
