@@ -12,9 +12,11 @@ Read more about Flask installation <a href="https://flask.palletsprojects.com/en
 
 ### Run the application
 
-In the project root, directory:
+In the project root directory:
 
 `python3 -m flask run`
+
+You can find the Flask quickstart page <a href="https://flask.palletsprojects.com/en/2.2.x/quickstart/">here</a>.
 
 ---
 
