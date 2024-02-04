@@ -24,3 +24,18 @@ jobs:
     - name: Run tests
       run: |
         python -m unittest discover -s . -p "test_*.py"
+    # Add Docker build if not already part of the workflow
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: gcr.io/lofty-root-378503/flask-app:latest  # Replace flask-app with your service name
+    # Deploy to Cloud Run
+    - name: Deploy to Cloud Run
+      uses: google-github-actions/deploy-cloudrun@v0.7.0
+      with:
+        service: flask-app  # Name of your Cloud Run service
+        image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-app:latest
+        credentials: ${{ secrets.GCLOUD_SERVICE_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        region: us-central1  # Specify the region your Cloud Run service is in
