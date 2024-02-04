@@ -1,6 +1,6 @@
 # flask-server-template
 
-[![Integration tests](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml/badge.svg)](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml)
+[![Tests](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml/badge.svg)](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml)
 
 Template for Flask server development.
 
