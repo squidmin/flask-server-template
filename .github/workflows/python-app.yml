@@ -59,7 +59,8 @@ jobs:
           --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest \
           --project=${{ secrets.GCP_PROJECT_ID }} \
           --region=us-central1 \
-          --platform=managed
+          --platform=managed \
+          --quiet
 #          --allow-unauthenticated  # Example flag, adjust according to your needs
       env:
         GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/flask-server-template/flask-server-template/gcloud-service-key.json
