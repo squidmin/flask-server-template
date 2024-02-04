@@ -64,7 +64,6 @@ jobs:
           --project=${{ secrets.GCP_PROJECT_ID }} \
           --service-account=tekton-pipeline@lofty-root-378503.iam.gserviceaccount.com \
           --region=us-central1 \
-          --no-traffic \
           --platform=managed \
           --quiet \
           --no-allow-unauthenticated \
