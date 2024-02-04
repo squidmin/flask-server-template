@@ -1,5 +1,7 @@
 # flask-server-template
 
+[![Integration tests](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml/badge.svg)](https://github.com/squidmin/flask-server-template/actions/workflows/python-app.yml)
+
 Template for Flask server development.
 
 Created using <a href = "https://www.python.org/downloads/release/python-3110/">Python v3.11</a>.
