@@ -67,4 +67,5 @@ jobs:
           --no-traffic \
           --platform=managed \
           --quiet \
-          --no-allow-unauthenticated
+          --no-allow-unauthenticated \
+          --verbosity=debug
