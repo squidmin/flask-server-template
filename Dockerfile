@@ -14,5 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the content of the local src directory to the working directory
 COPY . .
 
-# Specify the command to run on container start
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+# Copy entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Use entrypoint script to start the service
+ENTRYPOINT ["/entrypoint.sh"]
