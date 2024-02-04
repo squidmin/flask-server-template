@@ -10,11 +10,55 @@ Created using <a href = "https://www.python.org/downloads/release/python-3110/">
 
 Read more about Flask installation <a href="https://flask.palletsprojects.com/en/2.2.x/installation/">here</a>.
 
-### Run the application
+### Building and Running the Docker Container
 
-In the project root directory:
+1. **Build the Docker Image**
+
+   Navigate to the directory containing the Flask app and `Dockerfile`, and run:
+
+   ```bash
+   docker build -t flask-sample-app .
+   ```
+
+   This command builds a Docker image named `flask-sample-app` based on the instructions in the `Dockerfile`.
+
+2. **Run the Docker Container**
+
+   After the image has been successfully built, you can run your Flask app inside a Docker container using:
+
+   ```bash
+   docker run -p 5000:5000 flask-sample-app
+   ```
+
+   This command runs the Flask application inside a Docker container, mapping port 5000 of the container to port 5000 on your host, allowing you to access the Flask app by visiting `http://localhost:5000` in your web browser.
+
+### Using Podman
+
+If you prefer using Podman, the commands are very similar:
+
+1. **Build the Image**
+
+   ```bash
+   podman build -t flask-sample-app .
+   ```
+
+2. **Run the Container**
+
+   ```bash
+   podman run -p 5000:5000 flask-sample-app
+   ```
+
+### Running the application without containers
+
+To run the app without containers, run this command In the project root directory:
 
 `python3 -m flask run`
+
+### Running the tests
+
+```shell
+python -m unittest test_app.py
+```
 
 You can find the Flask quickstart page <a href="https://flask.palletsprojects.com/en/2.2.x/quickstart/">here</a>.
 
