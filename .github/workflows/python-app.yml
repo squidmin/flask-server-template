@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -33,14 +34,16 @@ jobs:
       env:
         GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
-    - name: Authenticate with Google Cloud
-      env:
-        GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
-      run: |
-        echo "$GCLOUD_SERVICE_KEY" | tr -d '\r' > gcloud-service-key.json
-        gcloud auth activate-service-account --key-file=gcloud-service-key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/gcloud-service-key.json
-        export GCP_ACCESS_TOKEN=$(gcloud auth print-access-token)
+    # Authenticate with Google Cloud
+    - name: Set up Google Cloud
+      uses: google-github-actions/setup-gcloud@v0.2.1
+      with:
+        service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    # Configure Docker to use the gcloud command-line tool as a credential helper
+    - name: Configure Docker
+      run: gcloud auth configure-docker
 
     # Add Docker build if not already part of the workflow
     - name: Build and push Docker image
