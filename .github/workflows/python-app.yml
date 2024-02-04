@@ -47,7 +47,8 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: gcr.io/lofty-root-378503/flask-app:latest  # Replace flask-app with your service name
+        tags: us-central1-docker.pkg.dev/lofty-root-378503/lofty-root-docker-test/flask-app:latest  # Replace flask-app with your service name
+
     # Deploy to Cloud Run
     - name: Deploy to Cloud Run
       uses: google-github-actions/deploy-cloudrun@v0.7.0
