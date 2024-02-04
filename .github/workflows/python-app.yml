@@ -44,17 +44,17 @@ jobs:
         docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest .
         docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest
 
-    - name: Authenticate with Google Cloud
-      env:
-        GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+    - name: Generate access token
       run: |
         echo "$GCLOUD_SERVICE_KEY" | tr -d '\r' > gcloud-service-key.json
         gcloud auth activate-service-account --key-file=gcloud-service-key.json
-        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/gcloud-service-key.json
-        export GCP_ACCESS_TOKEN=$(gcloud auth print-access-token)
+        echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/gcloud-service-key.json" >> $GITHUB_ENV
+        GCP_ACCESS_TOKEN=$(gcloud auth print-access-token)
+        echo "GCP_ACCESS_TOKEN=${GCP_ACCESS_TOKEN}" >> $GITHUB_ENV
 
     - name: Deploy to Cloud Run (CLI)
       run: |
+        gcloud auth activate-service-account --key-file=gcloud-service-key.json
         gcloud run deploy flask-app \
           --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest \
           --project=${{ secrets.GCP_PROJECT_ID }} \
@@ -63,5 +63,5 @@ jobs:
           --quiet
 #          --allow-unauthenticated  # Example flag, adjust according to your needs
       env:
-        GOOGLE_APPLICATION_CREDENTIALS: /home/runner/work/flask-server-template/flask-server-template/gcloud-service-key.json
+        GOOGLE_APPLICATION_CREDENTIALS: "$GCP_ACCESS_TOKEN"
 
