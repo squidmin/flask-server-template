@@ -35,7 +35,7 @@ jobs:
 
     - name: Test
       run: |
-        cd /home/runner/work/flask-server-template/flask-server-template/9abec6df2733dc3c8235d116 && ls -la
+        cd /home/runner/work/flask-server-template/flask-server-template && ls -la
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v0.3.0
