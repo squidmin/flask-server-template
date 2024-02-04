@@ -56,15 +56,15 @@ jobs:
 #        GCP_ACCESS_TOKEN=$(gcloud auth print-access-token)
 #        echo "GCP_ACCESS_TOKEN=${GCP_ACCESS_TOKEN}" >> $GITHUB_ENV
 
-#    - name: Deploy to Cloud Run (CLI)
-#      run: |
+    - name: Deploy to Cloud Run (CLI)
+      run: |
 #        gcloud auth activate-service-account --key-file=gcloud-service-key.json
-#        gcloud run deploy flask-app \
-#          --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest \
-#          --project=${{ secrets.GCP_PROJECT_ID }} \
-#          --region=us-central1 \
-#          --platform=managed \
-#          --quiet
-#      env:
-#        GOOGLE_APPLICATION_CREDENTIALS: "$GCP_ACCESS_TOKEN"
+        gcloud run deploy flask-app \
+          --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest \
+          --project=${{ secrets.GCP_PROJECT_ID }} \
+          --region=us-central1 \
+          --platform=managed \
+          --quiet
+      env:
+        GOOGLE_APPLICATION_CREDENTIALS: "$GCP_ACCESS_TOKEN"
 
