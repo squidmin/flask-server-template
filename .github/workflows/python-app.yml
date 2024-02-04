@@ -1,4 +1,4 @@
-name: Tests
+name: Build, Test, and Deploy to Google Cloud Run
 
 on:
   push:
@@ -7,14 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: 3.8
 
@@ -28,22 +29,25 @@ jobs:
         python -m unittest discover -s . -p "test_*.py"
 
     - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v0.4.0
+      uses: google-github-actions/auth@v0.5.0
       with:
         credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
 
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0.3.0
+
+    - name: Configure Docker to use the gcloud command-line tool as a credential helper
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
     - name: Build and Push Docker image to Google Artifact Registry
       run: |
-        gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
         docker build -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest .
         docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest
 
-    # Deploy to Cloud Run
     - name: Deploy to Cloud Run
-      uses: google-github-actions/deploy-cloudrun@v0.7.0
+      uses: google-github-actions/deploy-cloudrun@v0.8.0
       with:
         service: flask-app
         image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest
-#        credentials: ${{ secrets.GCLOUD_SERVICE_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
-        region: us-central1  # Specify the region your Cloud Run service is in
+        region: us-central1
