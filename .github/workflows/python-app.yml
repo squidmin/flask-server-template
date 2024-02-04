@@ -24,6 +24,24 @@ jobs:
     - name: Run tests
       run: |
         python -m unittest discover -s . -p "test_*.py"
+
+    - name: Setup Google Cloud SDK # Setup Google Cloud SDK (skip if already installed in the environment)
+      run: |
+        if ! gcloud --version; then
+          curl -sSL https://sdk.cloud.google.com | bash
+        fi
+      env:
+        GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+
+    - name: Authenticate with Google Cloud
+      env:
+        GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
+      run: |
+        echo "$GCLOUD_SERVICE_KEY" | tr -d '\r' > gcloud-service-key.json
+        gcloud auth activate-service-account --key-file=gcloud-service-key.json
+        export GOOGLE_APPLICATION_CREDENTIALS=$PWD/gcloud-service-key.json
+        export GCP_ACCESS_TOKEN=$(gcloud auth print-access-token)
+
     # Add Docker build if not already part of the workflow
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
