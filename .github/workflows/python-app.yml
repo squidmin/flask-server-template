@@ -45,6 +45,9 @@ jobs:
     - name: Configure Docker
       run: gcloud auth configure-docker
 
+    - name: Authenticate to Google Artifact Registry
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
     # Add Docker build if not already part of the workflow
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
@@ -57,7 +60,7 @@ jobs:
       uses: google-github-actions/deploy-cloudrun@v0.7.0
       with:
         service: flask-app  # Name of your Cloud Run service
-        image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-app:latest
+        image: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lofty-root-docker-test/flask-app:latest
         credentials: ${{ secrets.GCLOUD_SERVICE_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         region: us-central1  # Specify the region your Cloud Run service is in
